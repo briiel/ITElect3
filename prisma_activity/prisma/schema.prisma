@@ -16,22 +16,36 @@ datasource db {
 model Account {
   id        Int       @id @default(autoincrement())
   email     String    @unique
+  username  String    @unique
   password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   profile   Profile?
   modules   Module[]
 }
 
 model Profile {
-  id        Int       @id @default(autoincrement())
-  fullName  String
-  age       Int
-  accountId Int       @unique
-  account   Account   @relation(fields: [accountId], references: [id])    
+  id         Int       @id @default(autoincrement())
+  accountId  Int       @unique
+  firstName  String
+  middleName String?   
+  lastName   String
+  suffix     String?
+  bio        String?
+  picture    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  account    Account   @relation(fields: [accountId], references: [id])    
 }
 
 model Module {
-  id        Int       @id @default(autoincrement())
-  name      String
-  accountId Int
-  account   Account   @relation(fields: [accountId], references: [id])
+  recID         Int       @id @default(autoincrement())
+  accountCode   Int
+  moduleCode    String
+  moduleDetails String
+  moduleDesc    String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  account       Account   @relation(fields: [accountCode], references: [id])
 }
+
